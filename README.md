@@ -1,98 +1,88 @@
 # ML Take-Home Project
 
-This repository contains my submission for the machine learning take-home project using the provided census dataset.
+Hi! This repository contains my take-home project submission.
 
-## Project Objective
+I am a new graduate candidate, and this project shows how I approach a business problem end-to-end: data understanding, model building, evaluation, and business recommendations.
 
-Using the files `census-bureau.data` and `census-bureau.columns`, this project delivers:
+## What this project does
 
-1. A **classification model** to predict whether income is `>50K` or `<=50K`.
-2. A **segmentation model** to identify distinct population groups and support marketing strategy.
+Using `census-bureau.data` and `census-bureau.columns`, I built:
 
-## Repository Contents
+1. A **classification model** to predict income class (`>50K` vs `<=50K`)
+2. A **segmentation model** to group customers into meaningful personas for strategy
 
-- `classification.ipynb` - end-to-end supervised modeling workflow (preprocessing, model comparison, tuning, weighted evaluation, threshold strategy, interpretation, and error analysis).
-- `segmentation.ipynb` - unsupervised segmentation workflow (feature selection, k selection diagnostics, clustering, interpretation, weighted profiling, and business recommendations).
-- `census-bureau.data` - raw input dataset.
-- `census-bureau.columns` - column names aligned to the dataset.
-- `ML-TakehomeProject.pdf` - original project instructions.
+## Files in this repo
 
-## Environment Setup
+- `classification.ipynb` - supervised learning workflow (preprocessing, model comparison, tuning, thresholding, interpretation, and error analysis)
+- `segmentation.ipynb` - unsupervised workflow (feature selection, cluster diagnostics, clustering, profiling, and business actions)
+- `census-bureau.data` - input dataset
+- `census-bureau.columns` - column names for the dataset
+- `ML-TakehomeProject.pdf` - original project instructions
 
-### Option 1: Using Anaconda (recommended)
+## Setup
 
-1. Open a terminal in the project folder.
-2. Create and activate an environment:
+### Option 1: Conda (recommended)
 
 ```bash
 conda create -n ml-takehome python=3.12 -y
 conda activate ml-takehome
+pip install pandas numpy scikit-learn xgboost matplotlib seaborn
 ```
 
-3. Install required packages:
+### Option 2: Local Python
 
 ```bash
 pip install pandas numpy scikit-learn xgboost matplotlib seaborn
 ```
 
-### Option 2: Using system/local Python
+## How to run
 
-Install dependencies directly:
-
-```bash
-pip install pandas numpy scikit-learn xgboost matplotlib seaborn
-```
-
-## How to Run
-
-1. Launch Jupyter from the repository root:
+1. Open terminal in this project folder
+2. Start Jupyter:
 
 ```bash
 jupyter notebook
 ```
 
-2. Open and run notebooks in this order:
+3. Run notebooks in this order:
    - `classification.ipynb`
    - `segmentation.ipynb`
 
-> Note: Both notebooks assume they are run from the repository root so they can read `census-bureau.data` and `census-bureau.columns` with relative paths.
+Note: please run from the repo root so relative paths to the dataset files work.
 
-## Notebook Outputs
+## What to expect from each notebook
 
-### 1) Classification (`classification.ipynb`)
+### `classification.ipynb`
 
-Main outputs include:
-- train/validation/test split summary
-- baseline model comparison (Logistic Regression, Decision Tree, Random Forest, XGBoost)
-- tuned XGBoost final performance on held-out test data
-- weighted threshold operating table (precision/recall/lift)
-- feature-importance interpretation (encoded and business-friendly aggregated views)
-- false-negative profiling and governance notes
+- Train/validation/test split
+- Baseline model comparison
+- Tuned XGBoost results
+- Weighted ROC/threshold analysis
+- Model interpretation (feature importance)
+- False-negative analysis and model limitation notes
 
-### 2) Segmentation (`segmentation.ipynb`)
+### `segmentation.ipynb`
 
-Main outputs include:
-- selected feature subset and preprocessing pipeline
-- k-selection diagnostics (Elbow + quantitative quality metrics)
-- final K-Means segment assignment
-- top feature drivers of segmentation
-- weighted segment profile table and segment prioritization ranking
-- business actions and implementation notes
+- Feature selection and preprocessing
+- K selection (elbow + quality metrics)
+- K-Means segmentation
+- Robustness comparison with hierarchical clustering and GMM
+- Weighted segment profiling and prioritization
+- Segment-level business recommendations
 
-## Methodology Notes
+## How the two models work together
 
-- **Population weighting** (`weight` column) is incorporated where appropriate to make results population-representative.
-- **Classification and segmentation are complementary**:
-  - segmentation defines high-level strategy by customer group,
-  - classification score supports within-group targeting priority.
+- **Segmentation** helps decide **what strategy/message** to use for each customer group.
+- **Classification** helps decide **who to prioritize first** within each group.
 
-## Reproducibility
+In short: segment first for strategy, then score within segment for execution.
 
-- Random seeds are set in model steps where relevant (for example `random_state=42`).
-- If results differ slightly across systems, this is expected due to environment/library variations.
+## Reproducibility notes
+
+- Random seeds are used in key model steps (for example `random_state=42`).
+- Small result differences can happen across machines due to package/version differences.
 
 ## References
 
-Key references used while building the solution:
-- Scikit-learn documentation: https://scikit-learn.org/stable/
-- XGBoost documentation: https://xgboost.readthedocs.io/
+- Scikit-learn docs: https://scikit-learn.org/stable/
+- XGBoost docs: https://xgboost.readthedocs.io/
