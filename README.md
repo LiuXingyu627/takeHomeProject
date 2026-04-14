@@ -50,25 +50,102 @@ jupyter notebook
 
 Note: please run from the repo root so relative paths to the dataset files work.
 
-## What to expect from each notebook
+## Notebook Outputs (exact)
 
-### `classification.ipynb`
+### `classification.ipynb` outputs
 
-- Train/validation/test split
-- Baseline model comparison
-- Tuned XGBoost results
-- Weighted ROC/threshold analysis
-- Model interpretation (feature importance)
-- False-negative analysis and model limitation notes
+When you run this notebook end-to-end, you will see:
 
-### `segmentation.ipynb`
+1. **Data checks**
+   - total row count
+   - missing value count
+   - weighted vs unweighted `>50K` rate
+   - label count table
+   - weight distribution summary
 
-- Feature selection and preprocessing
-- K selection (elbow + quality metrics)
-- K-Means segmentation
-- Robustness comparison with hierarchical clustering and GMM
-- Weighted segment profiling and prioritization
-- Segment-level business recommendations
+2. **Exploratory business tables**
+   - weighted `P(>50K)` by:
+     - education
+     - weeks worked in year
+     - marital status
+     - sex
+
+3. **Baseline model comparison (validation set)**
+   - classification reports for:
+     - Logistic Regression
+     - Decision Tree
+     - Random Forest
+     - XGBoost
+   - weighted ROC-AUC for each model
+
+4. **XGBoost tuning results**
+   - printed grid results across `max_depth` and `learning_rate`
+   - best parameter pair and best validation ROC-AUC
+
+5. **Final model evaluation (test set)**
+   - final weighted classification report
+   - final weighted test ROC-AUC
+
+6. **Threshold and targeting outputs**
+   - cutoff table with:
+     - targeted population share
+     - score threshold
+     - weighted precision (hit rate)
+     - weighted recall (coverage)
+     - lift vs random
+   - recommended operating threshold + expected precision/recall/lift
+
+7. **Interpretability outputs**
+   - top encoded features by importance
+   - aggregated base-feature importance table for business readability
+
+8. **Error analysis outputs**
+   - weighted false negative rate at the recommended threshold
+   - false-negative profile tables by subgroup
+
+9. **Visualization**
+   - ROC curve on held-out test set with AUC in legend
+
+### `segmentation.ipynb` outputs
+
+When you run this notebook end-to-end, you will see:
+
+1. **Preprocessing confirmation**
+   - selected segmentation feature subset
+   - transformed matrix creation confirmation
+
+2. **K-selection diagnostics**
+   - Elbow plot (`k=2..8`)
+   - cluster quality metrics table across candidate `k`:
+     - silhouette
+     - calinski-harabasz
+     - davies-bouldin
+
+3. **Final clustering output**
+   - K-Means segment assignment with `k=5`
+   - raw segment size counts
+
+4. **Segment driver interpretation**
+   - top feature importance chart from Random Forest explainer model
+
+5. **Weighted business profiling**
+   - overall weighted `>50K` rate
+   - weighted segment profile table including:
+     - population share
+     - `>50K` earners rate
+     - lift vs population average
+     - opportunity index
+     - top marital status / education / occupation
+   - segment priority ranking table
+
+6. **Business strategy output**
+   - segment-by-segment recommended actions
+   - implementation notes for monitoring and refresh cadence
+
+7. **Robustness comparison**
+   - comparison table: K-Means vs Hierarchical vs GMM
+   - same evaluation metrics + runtime
+   - printed recommended model from benchmark
 
 ## How the two models work together
 
